@@ -4,11 +4,11 @@ import { returnRequest } from './interfaces';
 
 export async function engineRequest(
     url: string,
-    configuration: Object
+    data: Object
 ): Promise<returnRequest> {
     try {
         const result = await axios
-            .post(url + '/default/init-engine', configuration)
+            .post(url + '/init-engine', data)
             .catch((error: any) => {
                 throw new Error(error);
             });
@@ -21,14 +21,12 @@ export async function engineRequest(
 
 export async function codeRequest(
     url: string,
-    configuration: Object
+    data: Object
 ): Promise<returnRequest> {
     try {
-        const result = await axios
-            .post(url + '/default/code', configuration)
-            .catch((error: any) => {
-                throw new Error(error);
-            });
+        const result = await axios.post(url, data).catch((error: any) => {
+            throw new Error(error);
+        });
 
         return result.data;
     } catch (error) {
