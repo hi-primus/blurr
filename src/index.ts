@@ -8,8 +8,7 @@ import {
 
 import { engineRequest, codeRequest } from './components/api';
 import { v4 as uuidv4 } from 'uuid';
-
-export class Blurr {
+class Blurr {
     private _optimusAddress: string;
     private _engineConfiguration: EngineConfiguration = {
         engine: 'dask',
@@ -88,3 +87,5 @@ export class Blurr {
         };
     }
 }
+
+module.exports = Blurr;
