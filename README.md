@@ -45,7 +45,7 @@ const result = await blurr.request({
     dict: { test: ["Abc", "def", "ghi", "jkl"] },
 });
 
-const display = await blurrPandas.request({
+const display = await blurr.request({
     operation: "display",
     source: result.updated,
 });
