@@ -135,16 +135,18 @@ export function Blurr(options: ClientOptions = {}): Client {
     return prepareResult(blurr, result);
   };
 
-  blurr.runCode = (code: string) => {
+  blurr.runCode = (code: string, callback?: (result) => void) => {
     // TODO: check if it's debug
     const result = blurr.backendServer.runCode(
-      code
+      code,
+      callback ? (result) => callback(prepareResult(blurr, result)) : undefined
     ) as PromiseOr<PythonCompatible>;
     if (isPromiseLike(result)) {
       return result.then((result) => prepareResult(blurr, result));
     }
     return prepareResult(blurr, result);
   };
+
   blurr.sources = {};
   blurr.supports = blurr.backendServer.supports;
   // TODO: improve security in setGlobal and getGlobal

@@ -79,7 +79,7 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
     const micropip = pyodide.pyimport('micropip');
 
     await micropip.install(
-      'https://test-files.pythonhosted.org/packages/25/00/213d34172b618bd3b83317344715f2581b339fbfd3e2936f36ba6c67e508/pyoptimus-0.1.4047-py3-none-any.whl'
+      'https://test-files.pythonhosted.org/packages/2a/ac/c7d6b14eaf654dc424547c135b8e1edb78e89bc6dc2a41f009b207b0202b/pyoptimus-0.1.4048-py3-none-any.whl'
     );
     pyodide.runPython(`
       from optimus import Optimus
@@ -136,20 +136,25 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
     return callback;
   }
 
-  server.runCode = _optionalPromise(async (code: string) => {
-    if (!server.pyodide) {
-      server.pyodide = await pyodidePromise;
+  server.runCode = _optionalPromise(
+    async (code: string, callback?: (result: PythonCompatible) => void) => {
+      if (callback) {
+        console.warn('Callbacks not supported in pyodide backend');
+      }
+      if (!server.pyodide) {
+        server.pyodide = await pyodidePromise;
+      }
+      const result = server.pyodide.runPython(code);
+      try {
+        return typeof result?.toJs === 'function'
+          ? result.toJs({ dict_converter: _mapToObject })
+          : result;
+      } catch (error) {
+        console.warn(`Error converting to JS. \n`, `${code}\n`, error);
+        return result;
+      }
     }
-    const result = server.pyodide.runPython(code);
-    try {
-      return typeof result?.toJs === 'function'
-        ? result.toJs({ dict_converter: _mapToObject })
-        : result;
-    } catch (error) {
-      console.warn(`Error converting to JS. \n`, `${code}\n`, error);
-      return result;
-    }
-  });
+  );
 
   server.run = (paramsArray: ArrayOrSingle<Params>) => {
     if (!Array.isArray(paramsArray)) {
@@ -197,7 +202,11 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
   };
 
   server.runMethod = _optionalPromise(
-    (source: Source, path: string, kwargs: Kwargs) => {
+    (source: Source, path: string, kwargs: Kwargs, callback) => {
+      if (callback) {
+        console.warn('Callbacks not supported in pyodide backend');
+      }
+
       let sourceProxy: pyodidePackage.PyProxy;
 
       if (typeof source === 'string') {
@@ -243,7 +252,7 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
     }
   );
 
-  server._features = ['buffers', 'callbacks'];
+  server._features = ['buffers', 'functions'];
 
   server.supports = (features: string | Array<string>) => {
     if (typeof features === 'string') {

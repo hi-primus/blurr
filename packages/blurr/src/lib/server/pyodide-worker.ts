@@ -3,7 +3,7 @@ import type { Server as ServerInterface } from '../../types/server';
 import type { ServerOptions } from '../../types/server';
 import { getOperation } from '../operations';
 import { makePythonCompatible } from '../operations/factory';
-import { isPromiseLike, pythonString } from '../utils';
+import { isName, isPromiseLike, pythonString } from '../utils';
 
 import { initializeWorker } from './pyodide-worker-function';
 
@@ -70,28 +70,76 @@ function promiseWorker(url) {
     }
   };
   worker.onmessage = (event) => {
+    const usesCallback =
+      typeof promises[event.data.id]?.callback === 'function';
+
     if (!promises[event.data.id]) {
-      console.error(
-        `Error with id '${event.data.id}' not found. Event:`,
+      console.warn(
+        `Promise or Callback with id '${event.data.id}' not found. Event:`,
         event
       );
-      throw new Error(`Promise with id '${event.data.id}' not found`);
+      throw new Error(
+        `Promise or Callback with id '${event.data.id}' not found`
+      );
     }
-    if (event.data.error) {
-      promises[event.data.id].reject(event.data.error);
+    if (usesCallback && event.data.isCallbackResult) {
+      const { result } = event.data;
+      promises[event.data.id].callback(result);
     } else {
-      promises[event.data.id].resolve(event.data.result);
+      if (event.data.error) {
+        promises[event.data.id].reject(event.data.error);
+      } else {
+        promises[event.data.id].resolve(event.data.result);
+      }
+      delete promises[event.data.id];
     }
-    delete promises[event.data.id];
   };
   return {
-    postMessage: (message, transfer: ArrayBuffer[] | null = null) => {
+    postMessage: (
+      message,
+      transfer: ArrayBuffer[] | null = null,
+      callback?: (result: PythonCompatible) => unknown,
+      callbackName?: string
+    ) => {
       const id = currentId++;
-      const promise = new Promise((resolve, reject) => {
+
+      if (callback && message.type === 'run') {
+        // adds a prefix to the callback name to avoid conflicts with other variables
+
+        const callbackNameToFind = callbackName || '__blurr__callback_';
+        callbackName = `__blurr__callback_${id}_${callbackName || 'default'}`;
+
+        if (message.code) {
+          message.code = message.code.replace(
+            new RegExp(callbackNameToFind, 'g'),
+            callbackName
+          );
+        } else if (message.kwargs) {
+          for (const key in message.kwargs) {
+            const value = message.kwargs[key];
+            if (isName(value) && value.name === callbackNameToFind) {
+              value.name = callbackName;
+            }
+          }
+        }
+
+        return new Promise((resolve, reject) => {
+          worker.postMessage(
+            { id, usesCallback: callbackName, ...message },
+            transfer
+          );
+          promises[id] = { callback: callback, resolve, reject };
+        });
+      }
+      if (callback) {
+        console.warn(
+          'Callback is only supported for run operations. Ignoring callback.'
+        );
+      }
+      return new Promise((resolve, reject) => {
+        worker.postMessage({ id, ...message }, transfer);
         promises[id] = { resolve, reject };
       });
-      worker.postMessage({ id, ...message }, transfer);
-      return promise;
     },
   };
 }
@@ -141,13 +189,20 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
     return true;
   });
 
-  server.runCode = async (code: string) => {
+  server.runCode = async (
+    code: string,
+    callback?: (result: PythonCompatible) => void
+  ) => {
     await server.donePromise;
 
-    const result = await server.worker.postMessage({
-      type: 'run',
-      code,
-    });
+    const result = await server.worker.postMessage(
+      {
+        type: 'run',
+        code,
+      },
+      [],
+      callback
+    );
 
     if (server.supports('buffers')) {
       return toArrayBuffers(result) as PythonCompatible;
@@ -161,18 +216,18 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
     }
 
     const operations = paramsArray.map((params) => {
-      const { operationKey, operationType, ...kwargs } = params;
+      const { operationKey, operationType, callbackKey, ...kwargs } = params;
       const operation = getOperation(operationKey, operationType);
       if (!operation) {
         throw new Error(
           `Operation '${operationKey}' of type '${operationType}' not found`
         );
       }
-      return { operation, kwargs };
+      return { operation, kwargs, callbackKey };
     });
 
     return operations.reduce((promise: Promise<PythonCompatible>, _, i) => {
-      const { kwargs, operation } = operations[i];
+      const { kwargs, operation, callbackKey } = operations[i];
 
       const _operation = (result: OperationCompatible) => {
         if (
@@ -189,7 +244,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
           );
         }
 
-        return operation.run(server, kwargs);
+        return operation.run(server, { ...kwargs, callbackKey });
       };
 
       // check if `promise` is a promise
@@ -201,7 +256,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
     }, undefined) as PromiseOr<PythonCompatible>;
   };
 
-  server.runMethod = async (source, path, kwargs) => {
+  server.runMethod = async (source, path, kwargs, callback) => {
     await server.donePromise;
 
     const transfer: ArrayBuffer[] | null = [];
@@ -216,6 +271,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
         source: source.toString(),
         path,
         kwargs,
+        callback,
       },
       transfer
     )) as PythonCompatible;
@@ -227,7 +283,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
     return result;
   };
 
-  server._features = ['buffers', 'callbacks'];
+  server._features = ['buffers', 'functions'];
 
   server.supports = (features: string | Array<string>) => {
     if (typeof features === 'string') {
@@ -239,7 +295,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
   // TODO: prepareBuffer, prepareCallback
 
   server.setGlobal = async (name: string, value: PythonCompatible) => {
-    if (value instanceof Function && server.supports('callbacks')) {
+    if (value instanceof Function && server.supports('functions')) {
       const adaptedValue = {
         [name]: { value: value.toString(), name, _blurrType: 'function' },
       };

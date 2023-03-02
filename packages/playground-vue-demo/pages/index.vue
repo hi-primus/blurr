@@ -124,6 +124,18 @@ onMounted(() => {
     console.info('Initialization result should be 2:', result);
     enabled.value = true;
   });
+
+  const main = async () => {
+    const df = await window.blurr.readFile({
+      url: 'https://raw.githubusercontent.com/hi-primus/optimus/develop/examples/data/s.csv'
+    });
+
+    const df2 = await df.cols.abs();
+
+    const result = await df2.columnsSample();
+
+  }
+
   // enabled.value = true;
 });
 </script>

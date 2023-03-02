@@ -42,9 +42,9 @@ export function makePythonCompatible(
     server.setGlobal(name, value);
     return Name(name);
   } else if (value instanceof Function) {
-    if (!server.supports('callbacks')) {
+    if (!server.supports('functions')) {
       console.warn(
-        'Callbacks not supported as parameters on this kind of server'
+        'Functions not supported as parameters on this kind of server'
       );
       return null;
     }
@@ -77,6 +77,24 @@ function isKwargs(
   );
 }
 
+function getCallbackFromKwargs(kwargs: Record<string, PythonCompatible>): {
+  newKwargs: Record<string, PythonCompatible>;
+  callback?: (value: PythonCompatible) => void;
+} {
+  const { callbackKey = 'callback' } = kwargs;
+  const newKwargs = { ...kwargs };
+  let callback = (value: PythonCompatible) => value;
+  if (
+    typeof callbackKey === 'string' &&
+    kwargs[callbackKey] &&
+    typeof kwargs[callbackKey] === 'function'
+  ) {
+    callback = kwargs[callbackKey];
+    delete newKwargs[callbackKey];
+  }
+  return { newKwargs, callback };
+}
+
 function getRunMethod(
   operation: Operation,
   operationCreator: OperationCreator
@@ -84,18 +102,25 @@ function getRunMethod(
   if (operationCreator.getCode) {
     return (server: Server, kwargs) => {
       server.options.local && delete kwargs.target;
-      const code = operationCreator.getCode(kwargs);
+      const { newKwargs, callback } = getCallbackFromKwargs(kwargs);
+      const code = operationCreator.getCode(newKwargs);
       console.log('[CODE FROM GENERATOR]', code, {
         kwargs,
         args: operation.args,
       });
-      return server.runCode(code) as PromiseOr<PythonCompatible>;
+      return server.runCode(code, callback) as PromiseOr<PythonCompatible>;
     };
   } else if (operationCreator.run) {
     return (server: Server, kwargs) => {
       server.options.local && delete kwargs.target;
       console.log('[ARGUMENTS]', kwargs);
-      return operationCreator.run(server, kwargs);
+      const { newKwargs, callback } = getCallbackFromKwargs(kwargs);
+      if (callback) {
+        throw new Error(
+          'Callbacks are not supported for operations with a run method'
+        );
+      }
+      return operationCreator.run(server, newKwargs);
     };
   } else {
     return (server: Server, kwargs) => {
@@ -109,21 +134,25 @@ function getRunMethod(
           path.shift();
         }
 
+        const { newKwargs, callback } = getCallbackFromKwargs(kwargs);
+
         return server.runMethod(
           source,
           path.join('.'),
-          kwargs
+          newKwargs,
+          callback
         ) as PromiseOr<PythonCompatible>;
       } else {
+        const { newKwargs, callback } = getCallbackFromKwargs(kwargs);
         const source = kwargs.source || operationCreator.defaultSource;
         const target = server.options.local ? null : kwargs.target;
         const code =
           (target ? `${target} = ` : '') +
           (source ? `${source.toString()}.` : '') +
           camelToSnake(operationCreator.name) +
-          `(${pythonArguments(kwargs)})`;
+          `(${pythonArguments(newKwargs)})`;
         console.log('[CODE FROM DEFAULT GENERATOR]', code);
-        return server.runCode(code) as PromiseOr<PythonCompatible>;
+        return server.runCode(code, callback) as PromiseOr<PythonCompatible>;
       }
     };
   }

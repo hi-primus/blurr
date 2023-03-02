@@ -75,7 +75,7 @@ export const initializeWorker = () => {
       self.micropip = self.pyodide.pyimport('micropip');
 
       await self.micropip.install(
-        'https://test-files.pythonhosted.org/packages/25/00/213d34172b618bd3b83317344715f2581b339fbfd3e2936f36ba6c67e508/pyoptimus-0.1.4047-py3-none-any.whl'
+        'https://test-files.pythonhosted.org/packages/2a/ac/c7d6b14eaf654dc424547c135b8e1edb78e89bc6dc2a41f009b207b0202b/pyoptimus-0.1.4048-py3-none-any.whl'
       );
       self.pyodide.runPython(`
         from optimus import Optimus
@@ -173,7 +173,6 @@ export const initializeWorker = () => {
           self.postMessage({
             type: 'load',
             id: e.data.id,
-            usesCallback: e.data.usesCallback,
             error: err.message,
           });
           return;
@@ -182,6 +181,16 @@ export const initializeWorker = () => {
         let result = null;
         let error = null;
 
+        if (e.data.usesCallback) {
+          self.pyodide.globals.set(e.data.usesCallback, (result) => {
+            self.postMessage({
+              type: 'callback',
+              id: e.data.id,
+              result: adaptResult(result),
+            });
+          });
+        }
+
         try {
           const kwargs = fromTransferables(e.data.kwargs);
 
@@ -189,6 +198,7 @@ export const initializeWorker = () => {
             result = self.pyodide.runPython(e.data.code);
           } else {
             const runMethod = self.pyodide.globals.get('run_method');
+            // TODO: populate kwargs with a callback?
             result = runMethod(e.data.method, kwargs);
           }
         } catch (err) {
@@ -201,7 +211,6 @@ export const initializeWorker = () => {
           self.postMessage({
             type: 'run',
             id: e.data.id,
-            usesCallback: e.data.usesCallback,
             result,
             error,
           });

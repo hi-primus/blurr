@@ -39,6 +39,7 @@ declare global {
   type Params = Record<string, OperationCompatible> & {
     operationKey: string;
     operationType: OperationType;
+    callbackKey?: string;
   };
 
   type InputArgs = Record<string, OperationCompatible> | OperationCompatible[];
