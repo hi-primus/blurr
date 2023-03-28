@@ -140,18 +140,18 @@ export const operations = {
     ],
   }),
   join: DataframeOperation<{
-    dfs: SourceArg[];
+    dfRight: SourceArg;
     on: string;
-    how: string;
-    left_on: Cols;
-    right_on: Cols;
-    key_middle: boolean;
+    how: 'left' | 'right' | 'inner' | 'outer';
+    leftOn: string;
+    rightOn: string;
+    keyMiddle: boolean;
   }>({
     targetType: 'dataframe',
     name: 'cols.join',
     args: [
       {
-        name: 'dfs',
+        name: 'dfRight',
       },
       {
         name: 'how',
@@ -162,15 +162,15 @@ export const operations = {
         default: null,
       },
       {
-        name: 'left_on',
+        name: 'leftOn',
         default: null,
       },
       {
-        name: 'right_on',
+        name: 'rightOn',
         default: null,
       },
       {
-        name: 'key_middle',
+        name: 'keyMiddle',
         default: false,
       },
     ],
