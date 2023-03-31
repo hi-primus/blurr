@@ -28,7 +28,7 @@ export const initializeWorker = () => {
     return obj;
   }
 
-  importScripts('https://cdn.jsdelivr.net/pyodide/v0.22.1/full/pyodide.js');
+  importScripts('https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js');
 
   const adaptResult = (result) => {
     if (result instanceof ArrayBuffer) {
@@ -65,7 +65,7 @@ export const initializeWorker = () => {
   async function initialize(options = {}) {
     if (!backendLoaded) {
       options = Object.assign(
-        { indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.22.1/full/' },
+        { indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.0/full/' },
         options
       );
 
