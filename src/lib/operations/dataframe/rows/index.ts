@@ -190,8 +190,8 @@ export const operations = {
         default: '*',
       },
       {
-        name: 'desc',
-        default: true,
+        name: 'order',
+        default: 'desc',
       },
       {
         name: 'cast',
