@@ -29,8 +29,15 @@ export const operations = {
         name: 'spec',
       },
     ],
-    getCode: function (kwargs: { source: string; spec: string }) {
-      return `Meta.get(${kwargs.source}.meta, "${kwargs.spec}")`;
+    getCode: function (kwargs: {
+      source: string;
+      target?: string;
+      spec: string;
+    }) {
+      return (
+        (kwargs.target ? `${kwargs.target} = ` : '') +
+        `Meta.get(${kwargs.source}.meta, "${kwargs.spec}")`
+      );
     },
   }),
   saveCsv: DataframeOperation<NoArgs, ArrayBuffer>({

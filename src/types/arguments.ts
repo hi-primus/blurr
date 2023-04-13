@@ -20,4 +20,5 @@ export interface Name {
 export interface RequestOptions {
   category?: string;
   priority?: number;
+  getCode?: boolean;
 }

@@ -8,6 +8,7 @@ import { getOperation } from '../operations';
 import { operations } from '../operations/client';
 import { makePythonCompatible } from '../operations/factory';
 import { defaultOptions as defaultServerOptions, Server } from '../server';
+import { camelToSnake, pythonArguments } from '../utils';
 import {
   adaptKwargs,
   generateUniqueVariableName,
@@ -59,7 +60,10 @@ export function Blurr(options: ClientOptions = {}): Client {
     ? options.server
     : Server(options?.serverOptions);
 
-  blurr.run = (paramsArray: ArrayOrSingle<Params>, options: RequestOptions) => {
+  blurr.run = (
+    paramsArray: ArrayOrSingle<Params>,
+    requestOptions: RequestOptions
+  ) => {
     if (!Array.isArray(paramsArray)) {
       paramsArray = [paramsArray];
     }
@@ -76,7 +80,7 @@ export function Blurr(options: ClientOptions = {}): Client {
       ...paramsArray.map((params: Params) => {
         return {
           ...params,
-          requestOptions: params.requestOptions || options || {},
+          requestOptions: params.requestOptions || requestOptions || {},
         } as Params;
       })
     );
@@ -94,7 +98,17 @@ export function Blurr(options: ClientOptions = {}): Client {
 
     const lastOperation = operations[operations.length - 1];
 
-    if (lastOperation && lastOperation.targetType === 'dataframe') {
+    requestOptions = Object.assign(
+      {},
+      ...paramsQueue.map((params) => params?.requestOptions || {}),
+      requestOptions
+    );
+
+    if (
+      lastOperation &&
+      lastOperation.targetType === 'dataframe' &&
+      !requestOptions.getCode
+    ) {
       const lastParams = paramsQueue[paramsQueue.length - 1];
 
       if (lastParams.target === undefined) {
@@ -135,11 +149,52 @@ export function Blurr(options: ClientOptions = {}): Client {
       blurr,
       paramsQueue,
       blurr.options.serverOptions.local
-    );
+    ) as Params[];
     const requestOptions: RequestOptions = Object.assign(
       {},
       ...paramsQueue.map((params) => params?.requestOptions || {})
     );
+    let code: string | null;
+    if (requestOptions.getCode) {
+      code = '';
+      for (const params of paramsQueue) {
+        const { operationKey, operationType } = params;
+        const operation = getOperation(operationKey, operationType);
+        if (!operation) {
+          throw new Error(
+            `Operation '${operationKey}' of type '${operationType}' not found`
+          );
+        }
+        const kwargs = { ...params } as Record<string, PythonCompatible>;
+        delete kwargs.operationKey;
+        delete kwargs.operationType;
+        delete kwargs.requestOptions;
+
+        for (const key in kwargs) {
+          if (kwargs[key] === undefined) {
+            delete kwargs[key];
+          }
+        }
+
+        if (operation.getCode) {
+          code += operation.getCode(kwargs);
+          continue;
+        } else {
+          if (params.target) {
+            code += `${params.target} = `;
+          }
+          if (params.source) {
+            code += `${params.source}.`;
+          }
+          delete kwargs.source;
+          delete kwargs.target;
+          code += `${camelToSnake(operation.name)}(${pythonArguments(
+            kwargs
+          )})\n`;
+        }
+      }
+      return code;
+    }
     const result = blurr.backendServer.run(paramsQueue, requestOptions);
     if (isPromiseLike(result)) {
       return result.then((result) => prepareResult(blurr, result));
@@ -147,11 +202,14 @@ export function Blurr(options: ClientOptions = {}): Client {
     return prepareResult(blurr, result);
   };
 
-  blurr.runCode = (code: string, options: RequestOptions) => {
+  blurr.runCode = (code: string, requestOptions: RequestOptions) => {
+    if (requestOptions?.getCode) {
+      return code;
+    }
     // TODO: check if it's debug
     const result = blurr.backendServer.runCode(
       code,
-      options
+      requestOptions
     ) as PromiseOr<PythonCompatible>;
     if (isPromiseLike(result)) {
       return result.then((result) => prepareResult(blurr, result));

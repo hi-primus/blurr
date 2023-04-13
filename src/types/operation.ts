@@ -47,7 +47,7 @@ export interface OperationCreator {
 
 type OperationInterface = Pick<
   OperationCreator,
-  'name' | 'sourceType' | 'targetType' | 'createsNew' | 'initialize'
+  'name' | 'sourceType' | 'targetType' | 'createsNew' | 'initialize' | 'getCode'
 >;
 
 export type ArgsType = OperationArgs<OperationCompatible>;
