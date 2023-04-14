@@ -11,6 +11,7 @@ function DataframeCreationOperation<
     ...operationCreator,
     sourceType: 'none',
     targetType: 'dataframe',
+    createsNew: true,
   });
 }
 
