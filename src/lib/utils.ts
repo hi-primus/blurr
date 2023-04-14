@@ -10,8 +10,12 @@ export const RELATIVE_ERROR = 10_000;
 
 const uid = new ShortUniqueId({ length: 8 });
 
+const namesMap: Record<string, string> = {
+  dataframe: 'df',
+};
+
 export function generateUniqueVariableName(prefix = '') {
-  return prefix + uid.sequentialUUID();
+  return (namesMap[prefix] || prefix) + uid.sequentialUUID();
 }
 
 /**
