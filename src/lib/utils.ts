@@ -162,7 +162,7 @@ export const adaptKwargs = (
   // no defaults to apply
   if (!operationArgs) {
     if (isObject(args)) {
-      return args;
+      return { ...args };
     }
     console.warn(
       '🛼 Trying to adapt positional arguments without default arguments defined',
