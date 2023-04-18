@@ -4,6 +4,8 @@ export type Cols = string | string[] | number | number[] | undefined;
 export type TidiedOr<TValue, TKey extends string = string> =
   | TValue
   | Record<TKey, Record<string, TValue>>;
+export type TidyValue<T extends TidiedOr<PythonCompatible>> =
+  T extends TidiedOr<infer TValue> ? TValue : T;
 export type ColsResult<T> = T | Record<string, T>;
 export type SearchBy = 'full' | 'words' | 'chars' | 'values';
 export type FunctionArgument = (v: PythonCompatible) => PythonCompatible;
