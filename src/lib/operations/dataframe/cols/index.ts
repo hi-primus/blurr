@@ -556,7 +556,7 @@ export const operations = {
   }),
   groupBy: DataframeOperation<{ by: Cols; agg: string }>({
     targetType: 'dataframe',
-    name: 'cols.groupBy',
+    name: 'cols.groupby',
     args: [
       {
         name: 'by',
