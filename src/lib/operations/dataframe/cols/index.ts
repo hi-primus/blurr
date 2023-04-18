@@ -4,6 +4,7 @@ import type {
   NoArgs,
   SearchBy,
   SourceArg,
+  TidiedOr,
 } from '../../../../types/arguments';
 import type { ArgsType, OperationCreator } from '../../../../types/operation';
 import type { Source } from '../../../../types/source';
@@ -527,13 +528,24 @@ export const operations = {
       },
     ],
   }),
-  patternCounts: DataframeOperation<{
-    cols: Cols;
-    n: number;
-    mode: number;
-    flush: boolean;
-  }>({
-    targetType: 'dataframe',
+  patternCounts: DataframeOperation<
+    {
+      cols: Cols;
+      n: number;
+      mode: number;
+      flush: boolean;
+      tidy: boolean;
+    },
+    TidiedOr<
+      {
+        more: boolean;
+        updated: number;
+        values: { value: PythonCompatible; count: number }[];
+      },
+      'pattern_count'
+    >
+  >({
+    targetType: 'value',
     name: 'cols.patternCounts',
     args: [
       {
@@ -551,6 +563,10 @@ export const operations = {
       {
         name: 'flush',
         default: false,
+      },
+      {
+        name: 'tidy',
+        default: true,
       },
     ],
   }),
