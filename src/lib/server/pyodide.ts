@@ -1,7 +1,6 @@
 import crossFetch from 'cross-fetch';
 import * as pyodidePackage from 'pyodide';
 
-import { Source } from '../../types';
 import type {
   LoadPyodideType,
   PyodideBackendOptions,
@@ -197,7 +196,7 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
   };
 
   server.runMethod = _optionalPromise(
-    (source: Source, path: string, kwargs: Kwargs) => {
+    (source, path: string, kwargs: Kwargs) => {
       let sourceProxy: pyodidePackage.PyProxy;
 
       if (typeof source === 'string') {
@@ -230,8 +229,8 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
       delete kwargs.source;
       delete kwargs.target;
 
-      const runMethod = server.pyodide.globals.get('run_method');
-      const result = runMethod(method, kwargs);
+      const runMethod = server.pyodide?.globals.get('run_method');
+      const result = runMethod?.(method, kwargs);
       try {
         return typeof result?.toJs === 'function'
           ? result.toJs({ dict_converter: _mapToObject })

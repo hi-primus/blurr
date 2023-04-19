@@ -42,7 +42,8 @@ export interface OperationCreator {
     kwargs?: Record<string, PythonCompatible>
   ) => PythonCompatible;
   // generates the code that will be run on the server when the operation is run, replaces `run` if provided, uses snake case for the arguments
-  getCode?: (kwargs: Record<string, PythonCompatible>) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getCode?: (kwargs?: any) => string;
 }
 
 type OperationInterface = Pick<

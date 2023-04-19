@@ -38,7 +38,7 @@ function AggregationOperation<TA extends ArgsType = NoArgs>(
         name: 'cols',
         default: '*',
       },
-      ...operationCreator.args,
+      ...(operationCreator.args || []),
       {
         name: 'tidy',
         default: true,

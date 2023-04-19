@@ -1,3 +1,4 @@
+import { NoArgs, RequestOptions } from '../../../types/arguments';
 import type {
   ArgsType,
   Operation,
@@ -77,16 +78,18 @@ function isKwargs(
   );
 }
 
-function getRunMethod(
-  operation: Operation,
-  operationCreator: OperationCreator
-) {
-  if (operationCreator.getCode) {
-    return (server: Server, kwargs) => {
+function getRunMethod<
+  TA extends NoArgs | ArgsType,
+  TR extends OperationCompatible
+>(operation: Operation<TA, TR>, operationCreator: OperationCreator) {
+  const getCode = operationCreator.getCode;
+  const run = operationCreator.run;
+  if (getCode) {
+    return (server: Server, kwargs: Kwargs) => {
       server.options.local && delete kwargs.target;
-      const requestOptions = kwargs.requestOptions;
+      const requestOptions = kwargs.requestOptions as RequestOptions;
       delete kwargs.requestOptions;
-      const code = operationCreator.getCode(kwargs);
+      const code = getCode(kwargs);
       console.log('[CODE FROM GENERATOR]', code, {
         kwargs,
         args: operation.args,
@@ -96,16 +99,21 @@ function getRunMethod(
         requestOptions
       ) as PromiseOr<PythonCompatible>;
     };
-  } else if (operationCreator.run) {
-    return (server: Server, kwargs) => {
+  } else if (run) {
+    return (server: Server, kwargs: Kwargs) => {
       server.options.local && delete kwargs.target;
       console.log('[ARGUMENTS]', kwargs);
-      return operationCreator.run(server, kwargs);
+      return run(server, kwargs);
     };
   } else {
-    return (server: Server, kwargs) => {
-      if (server.options.local) {
-        let source = kwargs.source || operationCreator.defaultSource;
+    return (server: Server, kwargs: Kwargs) => {
+      if (server.options.local && server.runMethod) {
+        const sourceArg = kwargs.source || operationCreator.defaultSource;
+
+        let source: string | null =
+          isSource(sourceArg) || typeof sourceArg === 'string'
+            ? sourceArg.toString()
+            : null;
 
         const path = camelToSnake(operationCreator.name).split('.');
 
@@ -114,7 +122,7 @@ function getRunMethod(
           path.shift();
         }
 
-        const requestOptions = kwargs.requestOptions;
+        const requestOptions = kwargs.requestOptions as RequestOptions;
         delete kwargs.requestOptions;
 
         return server.runMethod(
@@ -126,7 +134,7 @@ function getRunMethod(
       } else {
         const source = kwargs.source || operationCreator.defaultSource;
         const target = server.options.local ? null : kwargs.target;
-        const requestOptions = kwargs.requestOptions;
+        const requestOptions = kwargs.requestOptions as RequestOptions;
         delete kwargs.requestOptions;
         const code =
           (target ? `${target} = ` : '') +
@@ -157,10 +165,12 @@ export function BlurrOperation<
 
   operation._run = getRunMethod(operation, operationCreator);
 
-  if (operationCreator.getInitializationCode) {
+  const getInitializationCode = operationCreator.getInitializationCode;
+
+  if (getInitializationCode) {
     operation.initialize = (server: RunsCode) => {
       return server.runCode(
-        operationCreator.getInitializationCode()
+        getInitializationCode()
       ) as PromiseOr<PythonCompatible>;
     };
   } else if (operationCreator.initialize) {
@@ -193,12 +203,12 @@ export function BlurrOperation<
     });
 
     return optionalPromise(operationResult, (operationResult) => {
-      if (server.options.local && server.pyodide.isPyProxy(operationResult)) {
+      if (server.options.local && server.pyodide?.isPyProxy(operationResult)) {
         return operationResult as unknown as TR; // TODO: Check support for proxies in types
       }
 
       if (operation.targetType == 'dataframe') {
-        return Name(kwargs.target.toString());
+        return Name(kwargs.target?.toString() || '');
       }
       return operationResult;
     }) as PromiseOr<TR>;

@@ -35,7 +35,7 @@ export interface Server extends RunsCode<PythonCompatible> {
   backend?: BackendInterface;
   backendLoaded: boolean;
   runMethod?: (
-    source: SourceArg,
+    source: SourceArg | string,
     method: string,
     kwargs: Record<string, unknown>,
     options?: RequestOptions

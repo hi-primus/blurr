@@ -127,9 +127,9 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
 
   server.options = Object.assign({}, defaultPyodideOptions, options);
 
-  server.worker = null;
+  server.worker = undefined;
 
-  server.backend = null;
+  server.backend = undefined;
 
   const workerPromise = loadWorker(server.options as PyodideBackendOptions);
 
@@ -144,7 +144,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
   server.runCode = async (code: string) => {
     await server.donePromise;
 
-    const result = await server.worker.postMessage({
+    const result = await server.worker?.postMessage({
       type: 'run',
       code,
     });
@@ -171,34 +171,37 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
       return { operation, kwargs };
     });
 
-    return operations.reduce((promise: Promise<PythonCompatible>, _, i) => {
-      const { kwargs, operation } = operations[i];
+    return operations.reduce(
+      (promise: Promise<PythonCompatible> | undefined, _, i) => {
+        const { kwargs, operation } = operations[i];
 
-      const _operation = (result: OperationCompatible) => {
-        if (
-          i > 0 &&
-          !kwargs.source &&
-          operation.sourceType === 'dataframe' &&
-          operations[i - 1].operation.targetType === 'dataframe' &&
-          result !== undefined
-        ) {
-          kwargs.source = makePythonCompatible(
-            server,
-            result,
-            server.options.local
-          );
+        const _operation = (result: OperationCompatible) => {
+          if (
+            i > 0 &&
+            !kwargs.source &&
+            operation.sourceType === 'dataframe' &&
+            operations[i - 1].operation.targetType === 'dataframe' &&
+            result !== undefined
+          ) {
+            kwargs.source = makePythonCompatible(
+              server,
+              result,
+              server.options.local
+            );
+          }
+
+          return operation.run(server, kwargs);
+        };
+
+        // check if `promise` is a promise
+        if (isPromiseLike(promise)) {
+          return promise.then(_operation) as Promise<PythonCompatible>;
         }
 
-        return operation.run(server, kwargs);
-      };
-
-      // check if `promise` is a promise
-      if (isPromiseLike(promise)) {
-        return promise.then(_operation) as Promise<PythonCompatible>;
-      }
-
-      return _operation(promise) as Promise<PythonCompatible>;
-    }, undefined) as PromiseOr<PythonCompatible>;
+        return _operation(promise) as Promise<PythonCompatible>;
+      },
+      undefined
+    ) as PromiseOr<PythonCompatible>;
   };
 
   server.runMethod = async (source, path, kwargs) => {
@@ -210,7 +213,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
       kwargs = toTransferables(kwargs, transfer);
     }
 
-    const result = (await server.worker.postMessage(
+    const result = (await server.worker?.postMessage(
       {
         type: 'run',
         source: source.toString(),
@@ -243,7 +246,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
       const adaptedValue = {
         [name]: { value: value.toString(), name, _blurrType: 'function' },
       };
-      await server.worker.postMessage({
+      await server.worker?.postMessage({
         type: 'setGlobal',
         value: adaptedValue,
       });
@@ -251,7 +254,7 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
     } else if (value instanceof ArrayBuffer && server.supports('buffers')) {
       const transfer: ArrayBuffer[] = [];
       const adaptedValue = toTransferables({ [name]: value }, transfer);
-      await server.worker.postMessage(
+      await server.worker?.postMessage(
         {
           type: 'setGlobal',
           value: adaptedValue,
@@ -272,7 +275,11 @@ export function ServerPyodideWorker(options: ServerOptions): ServerInterface {
 
   return {
     ...server,
-    then: (onFulfilled, onRejected) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    then: (
+      onFulfilled: (serverResult: typeof server) => void,
+      onRejected: (err: any) => void
+    ) => {
       workerPromise.then((worker) => {
         server.worker = server.backend = worker;
         server.backendLoaded = true;
