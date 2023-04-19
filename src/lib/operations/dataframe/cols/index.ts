@@ -537,12 +537,12 @@ export const operations = {
       tidy: boolean;
     },
     TidiedOr<
+      'pattern_counts',
       {
         more: boolean;
         updated: number;
-        values: { value: PythonCompatible; count: number }[];
-      },
-      'pattern_count'
+        values: { value: string; count: number }[];
+      }
     >
   >({
     targetType: 'value',
