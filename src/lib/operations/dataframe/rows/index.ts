@@ -205,7 +205,6 @@ export const operations = {
   }),
   drop: DataframeOperation<
     {
-      cols: Cols;
       where: string;
     },
     Source
@@ -213,10 +212,6 @@ export const operations = {
     targetType: 'dataframe',
     name: 'rows.drop',
     args: [
-      {
-        name: 'cols',
-        default: '*',
-      },
       {
         name: 'where',
         default: null,
