@@ -354,12 +354,15 @@ export const operations = {
       },
     ],
   }),
-  inferredDataType: DataframeOperation<{
-    cols: Cols;
-    useInternal: boolean;
-    calculate: boolean;
-    tidy: boolean;
-  }>({
+  inferredDataType: DataframeOperation<
+    {
+      cols: Cols;
+      useInternal: boolean;
+      calculate: boolean;
+      tidy: boolean;
+    },
+    TidiedOr<'inferred_data_type', string>
+  >({
     targetType: 'value',
     name: 'cols.inferred_data_type',
     args: [
