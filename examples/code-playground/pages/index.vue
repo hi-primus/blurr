@@ -3,7 +3,7 @@
     <div
       class="playground-container h-[100vh] p-5 flex gap-3 text-text"
       :class="{
-        'opacity-50 pointer-events-none': !enabled
+        'pointer-events-none': !enabled
       }"
     >
       <div class="w-2/3">
@@ -13,14 +13,13 @@
             @click="runCode"
             class="bg-primary hover:bg-primary-darker text-white rounded px-4 py-2"
           >
-            {{ enabled ? 'Run' : 'Loading...' }}
+            Run
           </button>
           <div class="hints h-full py-2 px-6">
             Client variable name:
             <span class="font-mono text-primary-darkest">blurr</span>
           </div>
         </div>
-        <!-- a text area that when i press shift enter alerts its content -->
 
         <div
           @keydown.enter="
@@ -32,9 +31,7 @@
           "
           ref="container"
           class="font-mono text-text-alpha rounded overflow-hidden h-[calc(100%-64px)] w-full"
-        >
-          <!-- v-model="code" -->
-        </div>
+        ></div>
       </div>
       <div class="result bg-white w-[40%]">
         <div class="title text-2xl font-bold h-12 mb-6">Result</div>
@@ -45,6 +42,13 @@
           {{ result }}
         </div>
       </div>
+    </div>
+    <div
+      v-if="!enabled"
+      class="absolute inset-0 bg-white/75 flex gap-2 flex-col justify-center items-center"
+    >
+      <span class="loader text-primary"></span>
+      <span class="text-text-light text-lg">Loading pyodide</span>
     </div>
   </NuxtLayout>
 </template>
@@ -149,3 +153,25 @@ onMounted(() => {
   runCode();
 });
 </script>
+
+<style lang="scss">
+.loader {
+  width: 36px;
+  height: 36px;
+  border: 4px solid currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
