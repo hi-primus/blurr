@@ -38,7 +38,10 @@
       </div>
       <div class="result bg-white w-[40%]">
         <div class="title text-2xl font-bold h-12 mb-6">Result</div>
-        <div :class="{ 'text-error': error, 'text-primary-darkest': !error }">
+        <div
+          :class="{ 'text-error': error, 'text-primary-darkest': !error }"
+          class="text-[14px] font-mono h-[calc(100%-64px)] overflow-auto whitespace-pre-wrap"
+        >
           {{ result }}
         </div>
       </div>
@@ -68,7 +71,9 @@ df = blurr.createDataframe({
   country: ["usa", null]
 });
 
-return await df.cols.names();
+df = df.cols.upper(["city"])
+
+return await df.ascii();
 `);
 const result = ref('');
 const error = ref(false);

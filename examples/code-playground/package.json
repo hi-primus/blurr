@@ -1,6 +1,6 @@
 {
   "name": "@hi-primus/blurr-playground-vue",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A Nuxt.js 3 project to test Blurr",
   "private": true,
   "author": "Hi Primus",

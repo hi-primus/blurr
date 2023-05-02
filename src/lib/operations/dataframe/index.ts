@@ -21,6 +21,10 @@ export const operations = {
     name: 'columnsSample',
     targetType: 'value',
   }),
+  ascii: DataframeOperation<NoArgs, string>({
+    name: 'ascii',
+    targetType: 'value',
+  }),
   getMeta: DataframeOperation<{ spec: string }, string | undefined>({
     name: 'getMeta',
     targetType: 'value',
