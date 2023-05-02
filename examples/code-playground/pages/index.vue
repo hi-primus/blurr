@@ -145,5 +145,7 @@ onMounted(() => {
   (window as any).blurrPackage = blurrPackage;
   (window as any).blurr = blurr; // overrides window.blurr from package
   (window as any).blurrDone = true; // overrides window.blurr from package
+
+  runCode();
 });
 </script>
