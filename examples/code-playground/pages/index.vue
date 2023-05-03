@@ -1,21 +1,21 @@
 <template>
   <NuxtLayout>
     <div
-      class="playground-container h-[100vh] p-5 flex gap-3 text-text"
+      class="playground-container text-sm md:text-md min-h-[50vh] p-1 md:p-3 lg:p-5 flex flex-wrap gap-[0.5rem] text-text"
       :class="{
         'pointer-events-none': !enabled
       }"
     >
-      <div class="w-2/3">
-        <div class="h-12 flex mb-4">
+      <div class="flex-[2] w-[640px] max-w-full">
+        <div class="h-12 flex items-center mb-4">
           <button
             type="button"
             @click="runCode"
-            class="bg-primary hover:bg-primary-darker text-white rounded px-4 py-2"
+            class="bg-primary hover:bg-primary-darker flex items-center text-white rounded px-4 py-2 h-8"
           >
             Run
           </button>
-          <div class="hints h-full py-2 px-6">
+          <div class="hints py-2 px-6">
             Client variable name:
             <span class="font-mono text-primary-darkest">blurr</span>
           </div>
@@ -33,8 +33,8 @@
           class="font-mono text-text-alpha rounded overflow-hidden h-[calc(100%-64px)] w-full"
         ></div>
       </div>
-      <div class="result bg-white w-[40%]">
-        <div class="title text-2xl font-bold h-12 mb-6">Result</div>
+      <div class="result bg-white flex-1 min-w-[320px] max-w-full">
+        <div class="title text-xl lg:text-2xl font-bold h-12 mb-6">Result</div>
         <div
           :class="{ 'text-error': error, 'text-primary-darkest': !error }"
           class="text-[14px] font-mono h-[calc(100%-64px)] overflow-auto whitespace-pre-wrap"
