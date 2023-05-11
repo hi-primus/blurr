@@ -130,7 +130,7 @@ export const operations = {
       },
     ],
   }),
-  /* Concatenate two dataframes.
+  /** Concatenate two dataframes.
    * @param dfs - Dataframes to concatenate.
    * @returns - Dataframe with the concatenated columns.
    */
@@ -144,7 +144,7 @@ export const operations = {
       },
     ],
   }),
-  /* Join two dataframes using a column.
+  /** Join two dataframes using a column.
    * @param dfRight - Dataframe to join.
    * @param how - Type of join.
    * @param on - Column to join on.
@@ -189,7 +189,7 @@ export const operations = {
       },
     ],
   }),
-  /* Select columns in a dataframe.
+  /** Select columns in a dataframe.
    * @param cols - Columns to be selected.
    * @param regex - Regex pattern to match columns.
    * @param dataType - Data type of the columns.
@@ -223,7 +223,7 @@ export const operations = {
       },
     ],
   }),
-  /* Copy a column or multiple columns.
+  /** Copy a column or multiple columns.
    * @param cols - Columns to be copied.
    * @param outputCols - Output columns.
    * @returns - Dataframe with the new columns.
@@ -242,7 +242,7 @@ export const operations = {
       },
     ],
   }),
-  /* Drop columns from a dataframe.
+  /** Drop columns from a dataframe.
    * @param cols - Columns to be dropped.
    * @param regex - Regex pattern to match columns.
    * @param data_type - Data type of the columns.
@@ -266,7 +266,7 @@ export const operations = {
       },
     ],
   }),
-  /* Keep columns in a dataframe.
+  /** Keep columns in a dataframe.
    * @param cols - Columns to be kept.
    * @param regex - Regex pattern to match columns.
    * @returns - Dataframe with the columns.
@@ -285,7 +285,7 @@ export const operations = {
       },
     ],
   }),
-  /* Convert a column to timestamp.
+  /** Convert a column to timestamp.
    * @param cols - Columns to be converted.
    * @param format - Timestamp format.
    * @returns - Dataframe with the new column.
@@ -304,7 +304,7 @@ export const operations = {
       },
     ],
   }),
-  /* Convert a column to a list.
+  /** Convert a column to a list.
    * @param cols - Columns to be converted.
    * @returns - Dataframe with the new column.
    */
@@ -319,7 +319,7 @@ export const operations = {
     ],
   }),
   // TODO:Support UDF
-  /* Set a column value using a number, string or an expression.
+  /** Set a column value using a number, string or an expression.
    * @param cols - Columns to be updated.
    * @param valueFunc - Function to calculate the new value. It can be a number, string or an expression.
    * @param where - Expression to filter rows.
@@ -377,7 +377,7 @@ export const operations = {
       },
     ],
   }),
-  /* Rename one or multiple columns.
+  /** Rename one or multiple columns.
    * @param cols - Columns to be renamed
    * @param names - New names to be assigned
    * @param func - Function to be applied to the column names
@@ -407,7 +407,7 @@ export const operations = {
       },
     ],
   }),
-  /* Parse a engine column specific data type to a profiler data type.
+  /** Parse a engine column specific data type to a profiler data type.
    * @param colDataType - Column data type to be parsed
    * @returns - A dataframe with the parsed data type
    */
@@ -420,7 +420,7 @@ export const operations = {
       },
     ],
   }),
-  /* Returns the inferred data type of the column
+  /** Returns the inferred data type of the column
    * @param cols - Columns to be processed
    * @param useInternal - Use internal data type
    * @param calculate - Calculate the inferred data type
@@ -455,7 +455,7 @@ export const operations = {
       },
     ],
   }),
-  /* Set user defined date format in the metadata
+  /** Set user defined date format in the metadata
    * @param cols - Columns to be processed
    * @param dataTypes - Date format
    * @param inferred - Infer date format
@@ -483,7 +483,7 @@ export const operations = {
       },
     ],
   }),
-  /* Unset user set data type.
+  /** Unset user set data type.
    * @param cols - Columns to be processed
    * @returns - A dataframe with the un-setted data type
    */
@@ -497,7 +497,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast the elements inside a column or a list of columns to a specific data type.
+  /** Cast the elements inside a column or a list of columns to a specific data type.
    * @param cols - Columns to be processed
    * @param dataType - Data type to be casted
    * @param outputCols - Output columns
@@ -521,7 +521,7 @@ export const operations = {
       },
     ],
   }),
-  /* Returns the profile of selected columns.
+  /** Returns the profile of selected columns.
    * @param cols - Columns to be processed
    * @param bins - Number of bins to be used
    * @param flush - Flush the cache
@@ -545,7 +545,7 @@ export const operations = {
       },
     ],
   }),
-  /* Replace alphanumeric and punctuation chars for canned chars. We aim to help to find string patterns
+  /** Replace alphanumeric and punctuation chars for canned chars. We aim to help to find string patterns
      c = Any alpha char in lower or upper case
      l = Any alpha char in lower case
      U = Any alpha char in upper case
@@ -575,7 +575,7 @@ export const operations = {
       },
     ],
   }),
-  /* Assign new columns to a Dataframe.
+  /** Assign new columns to a Dataframe.
    * @param cols - Columns to be assigned
    * @param values - Value to be assigned or a function to compute the value
    * @returns - Dataframe with new columns assigned
@@ -598,7 +598,7 @@ export const operations = {
       },
     ],
   }),
-  /* Compute pairwise correlation of columns, excluding NA/null values.
+  /** Compute pairwise correlation of columns, excluding NA/null values.
    * @param cols - Columns to be used to compute the correlation
    * @param method - Correlation method to be used. 'pearson', 'spearman', 'kendall'
    * @param compute - If True, compute the operation and return the table. Otherwise, return a function that can be passed to a dataframe
@@ -615,7 +615,7 @@ export const operations = {
       },
     ],
   }),
-  /* By default, computes a frequency table of the factors unless an array of values and an aggregation function are passed.
+  /** By default, computes a frequency table of the factors unless an array of values and an aggregation function are passed.
    * @param colX - Column to be used as X
    * @param colY - Column to be used as Y
    * @param output - Column name for the output
@@ -646,7 +646,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get how many equal patterns there are in a column. Triggers the operation only if necessary.
+  /** Get how many equal patterns there are in a column. Triggers the operation only if necessary.
    * @param cols: Columns to be transformed
    * @param n: Number of patterns to be returned
    * @param mode: 1: Ordered by frequency. 2: Ordered by appearance
@@ -696,7 +696,7 @@ export const operations = {
       },
     ],
   }),
-  /* Group by a column and aggregate the values of another column.
+  /** Group by a column and aggregate the values of another column.
    * @param by - Column to group by
    * @param agg - Aggregation function to apply
    * @returns - Dataframe with the grouped columns
@@ -713,7 +713,7 @@ export const operations = {
       },
     ],
   }),
-  /* Move a column to a specific position.
+  /** Move a column to a specific position.
    * @param column - Column to be moved
    * @param position - 'before' or 'after'
    * @param refCol - Reference column
@@ -742,7 +742,7 @@ export const operations = {
       },
     ],
   }),
-  /* Sort the columns by name.
+  /** Sort the columns by name.
    * @param order - 'ascending' or 'descending'
    * @param cols - Columns to be transformed
    * @returns - Dataframe with the sorted columns
@@ -760,7 +760,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the column(s) data type as string.
+  /** Return the column(s) data type as string.
    * @param cols - Columns to be transformed
    * @param names - Whether to return the result as a string or an array of strings
    * @param tidy - Whether to return the result as a tidy dataframe
@@ -783,7 +783,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the column(s) data type as Type.
+  /** Return the column(s) data type as Type.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @returns - Dataframe with the data type of the columns
@@ -802,7 +802,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the median absolute deviation over one or more columns.
+  /** Return the median absolute deviation over one or more columns.
    * @param cols - Columns to be transformed
    * @param relativeError - Whether to use relative error
    * @param more - Whether to return more information
@@ -823,7 +823,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the minimum value of the requested columns.
+  /** Get the minimum value of the requested columns.
    * @param cols - Columns to be transformed
    * @param numeric - Whether to return the result as a tidy dataframe
    * @tidy - Whether to return the result as a tidy dataframe
@@ -839,7 +839,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the maximum value of the requested columns.
+  /** Get the maximum value of the requested columns.
    * @param cols - Columns to be transformed
    * @param numeric - Whether to return the result as a tidy dataframe
    * @tidy - Whether to return the result as a tidy dataframe
@@ -859,7 +859,7 @@ export const operations = {
   mode: AggregationOperation({
     name: 'cols.mode',
   }),
-  /* Return the minimum and maximum of the values over the requested columns.
+  /** Return the minimum and maximum of the values over the requested columns.
   * @param cols - Columns to be transformed
   * @param tidy - Whether to return the result as a tidy dataframe
   * @param compute - Whether to compute immediately
@@ -868,7 +868,7 @@ export const operations = {
   range: AggregationOperation({
     name: 'cols.range',
   }),
-  /* Return values at the given percentile over requested column.
+  /** Return values at the given percentile over requested column.
    * @param cols - Columns to be transformed
    * @param values - Percentile values
    * @param relativeError - Relative Error
@@ -898,7 +898,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the median of the values over the requested column.
+  /** Return the median of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param relativeError - Relative Error
    * @param tidy - Whether to return the result as a tidy dataframe
@@ -916,7 +916,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the variance of the values over the requested column.
+  /** Return the variance of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @param compute - Whether to compute immediately
@@ -925,7 +925,7 @@ export const operations = {
   kurtosis: AggregationOperation({
     name: 'cols.kurtosis',
   }),
-  /* Return the skew of the values over the requested column.
+  /** Return the skew of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @param compute - Whether to compute immediately
@@ -934,7 +934,7 @@ export const operations = {
   skew: AggregationOperation({
     name: 'cols.skew',
   }),
-  /* Return the mean of the values over the requested column.
+  /** Return the mean of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @param compute - Whether to compute immediately
@@ -943,7 +943,7 @@ export const operations = {
   mean: AggregationOperation({
     name: 'cols.mean',
   }),
-  /* Return the sum of the values over the requested column.
+  /** Return the sum of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @param compute - Whether to compute immediately
@@ -952,7 +952,7 @@ export const operations = {
   sum: AggregationOperation({
     name: 'cols.sum',
   }),
-  /* Return the prod of the values over the requested column.
+  /** Return the prod of the values over the requested column.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the result as a tidy dataframe
    * @param compute - Whether to compute immediately
@@ -961,7 +961,7 @@ export const operations = {
   prod: AggregationOperation({
     name: 'cols.prod',
   }),
-  /* Get the cumulative sum of a numeric column.
+  /** Get the cumulative sum of a numeric column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the cumulative sum
@@ -980,7 +980,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the cumulative product of a numeric column.
+  /** Get the cumulative product of a numeric column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the cumulative product
@@ -999,7 +999,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the cumulative maximum of a numeric column.
+  /** Get the cumulative maximum of a numeric column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the cumulative maximum
@@ -1018,7 +1018,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the cumulative minimum of a numeric column.
+  /** Get the cumulative minimum of a numeric column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the cumulative minimum
@@ -1037,7 +1037,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the variance of a numeric column.
+  /** Get the variance of a numeric column.
    * @param cols - Columns to be transformed
    * @param compute - Whether to compute immediately
    * @param tidy - Whether to return the output in tidy format
@@ -1046,7 +1046,7 @@ export const operations = {
   variance: AggregationOperation({
     name: 'cols.var',
   }),
-  /* Get the standard deviation of a numeric column.
+  /** Get the standard deviation of a numeric column.
    * @param cols - Columns to be transformed
    * @param compute - Whether to compute immediately
    * @param cached - Whether to used cached results
@@ -1055,7 +1055,7 @@ export const operations = {
   std: AggregationOperation({
     name: 'cols.std',
   }),
-  /* Get the date format from a column, compatible with 'format_date'.
+  /** Get the date format from a column, compatible with 'format_date'.
    * @param cols - Columns to be transformed
    * @param tidy - Whether to return the output in tidy format
    * @param compute - Whether to compute immediately
@@ -1089,7 +1089,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get an item from a list in a cell and put it in another column.
+  /** Get an item from a list in a cell and put it in another column.
    * @param col - Column to be transformed
    * @param index - Index to be extracted
    * @param outputCols - Output columns names
@@ -1113,7 +1113,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return items from a dict over requested columns.
+  /** Return items from a dict over requested columns.
    * @param col - Column to be transformed
    * @param keys - Keys to be extracted
    * @param outputCols - Output columns names
@@ -1137,7 +1137,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return the absolute value of each element in the DataFrame.
+  /** Return the absolute value of each element in the DataFrame.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the absolute value of each element in the DataFrame.
@@ -1156,7 +1156,7 @@ export const operations = {
       },
     ],
   }),
-  /* Return Euler's number, e (~2.718) raised to the power of each value in a column.
+  /** Return Euler's number, e (~2.718) raised to the power of each value in a column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the exponential of each value in a column.
@@ -1175,7 +1175,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate th logarithm base 10 of each value in a column.
+  /** Calculate th logarithm base 10 of each value in a column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the logarithm base 10 of each value in a column.
@@ -1198,7 +1198,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the natural logarithm of the values
+  /** Calculate the natural logarithm of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the natural logarithm of the values plus one
@@ -1217,7 +1217,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the square of the values
+  /** Calculate the square of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the square of the values
@@ -1240,7 +1240,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the square of the values
+  /** Calculate the square of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the square of the values
@@ -1259,7 +1259,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the reciprocal(1/x) of each value in a column.
+  /** Calculate the reciprocal(1/x) of each value in a column.
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns - Dataframe with the reciprocal of the values
@@ -1278,7 +1278,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the round of the values
+  /** Calculate the round of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @param decimals - Number of decimal places to round to
@@ -1299,7 +1299,7 @@ export const operations = {
       ],
     }
   ),
-  /* Calculate the floor of the values
+  /** Calculate the floor of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the floor of the values
@@ -1318,7 +1318,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the ceiling of the values
+  /** Calculate the ceiling of the values
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the ceiling of the values
@@ -1337,79 +1337,79 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the Sine
+  /** Calculate the Sine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the sine of the values
    */
   sin: StandardDataframeOperation('cols.sin'),
-  /* Calculate the Cosine
+  /** Calculate the Cosine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the cosine of the values
    */
   cos: StandardDataframeOperation('cols.cos'),
-  /* Calculate the Tangent
+  /** Calculate the Tangent
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the tangent of the values
    */
   tan: StandardDataframeOperation('cols.tan'),
-  /* Calculate the Arc sine
+  /** Calculate the Arc sine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the arc sine of the values
    */
   asin: StandardDataframeOperation('cols.asin'),
-  /* Calculate the Arc cosine
+  /** Calculate the Arc cosine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the arc cosine of the values
    */
   acos: StandardDataframeOperation('cols.acos'),
-  /* Calculate the Arc tangent
+  /** Calculate the Arc tangent
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the arc tangent of the values
    */
   atan: StandardDataframeOperation('cols.atan'),
-  /* Calculate the Hyperbolic sine
+  /** Calculate the Hyperbolic sine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the hyperbolic sine of the values
    */
   sinh: StandardDataframeOperation('cols.sinh'),
-  /* Calculate the Hyperbolic cosine
+  /** Calculate the Hyperbolic cosine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the hyperbolic cosine of the values
    */
   cosh: StandardDataframeOperation('cols.cosh'),
-  /* Calculate the Hyperbolic tangent
+  /** Calculate the Hyperbolic tangent
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the hyperbolic tangent of the values
    */
   tanh: StandardDataframeOperation('cols.tanh'),
-  /* Calculate the Inverse sine
+  /** Calculate the Inverse sine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the inverse sine of the values
    */
   asinh: StandardDataframeOperation('cols.asinh'),
-  /* Calculate the Inverse hyperbolic cosine
+  /** Calculate the Inverse hyperbolic cosine
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the inverse hyperbolic cosine of the values
    */
   acosh: StandardDataframeOperation('cols.acosh'),
-  /* Calculate the Inverse hyperbolic tangent
+  /** Calculate the Inverse hyperbolic tangent
    * @param cols - Columns to be transformed
    * @param outputCols - Output columns names
    * @returns Dataframe with new columns containing the inverse hyperbolic tangent of the values
    */
   atanh: StandardDataframeOperation('cols.atanh'),
-  /* Slice substrings from each element in a column.
+  /** Slice substrings from each element in a column.
    * @param cols - Columns to be transformed
    * @param start - Starting index
    * @param end - Ending index
@@ -1443,7 +1443,7 @@ export const operations = {
       },
     ],
   }),
-  /* Extract a string that match a regular expression.
+  /** Extract a string that match a regular expression.
    * @param cols - Columns to be transformed
    * @param regex - Regular expression to be matched
    * @param replacement - Replacement string
@@ -1469,7 +1469,7 @@ export const operations = {
       },
     ],
   }),
-  /* TODO: implement */
+  /** TODO: implement */
   slice: DataframeOperation<{
     cols: Cols;
     start: number;
@@ -1502,7 +1502,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the leftmost n characters of each string in a column
+  /** Get the leftmost n characters of each string in a column
    * @param cols - Columns to be processed.
    * @param n - Number of characters to be extracted.
    * @param outputCols - Output columns.
@@ -1526,7 +1526,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the rightmost n characters of each string in a column
+  /** Get the rightmost n characters of each string in a column
    * @param cols - Columns to be processed.
    * @param n - Number of characters to be extracted.
    * @param outputCols - Output columns.
@@ -1550,7 +1550,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the substring from two indices or from an index and a length
+  /** Get the substring from two indices or from an index and a length
    * @param cols - Columns to be processed.
    * @param start - Starting index.
    * @param end - Ending index.
@@ -1590,7 +1590,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast to float.
+  /** Cast to float.
    * @param cols - Columns to be casted.
    * @param outputCols - Output columns.
    * @returns Dataframe with new float columns.
@@ -1609,7 +1609,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast to numeric.
+  /** Cast to numeric.
    * @param cols - Columns to be casted.
    * @param outputCols - Output columns.
    * @returns Dataframe with new numeric columns.
@@ -1628,7 +1628,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast to integer.
+  /** Cast to integer.
    * @param cols - Columns to be casted.
    * @param outputCols - Output columns.
    * @returns Dataframe with new integer columns.
@@ -1647,7 +1647,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast to boolean.
+  /** Cast to boolean.
    * @param cols - Columns to be casted.
    * @param outputCols - Output columns.
    * @returns Dataframe with new boolean columns.
@@ -1666,7 +1666,7 @@ export const operations = {
       },
     ],
   }),
-  /* Cast columns to string type.
+  /** Cast columns to string type.
    * @param cols - Columns to be casted.
    * @param outputCols - Output columns.
    * @returns Dataframe with new string columns.
@@ -1685,7 +1685,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the date format for every value in specified columns.
+  /** Get the date format for every value in specified columns.
    * @param cols - Columns to be processed.
    * @param outputCols - Output columns.
    * @returns Dataframe with new date columns.
@@ -1704,7 +1704,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get a random sample from a dataframe.
+  /** Get a random sample from a dataframe.
    * @param cols - Columns to be sampled.
    * @param n - Number of rows to be sampled.
    * @param seed - Seed for sampling.
@@ -1732,12 +1732,34 @@ export const operations = {
       },
     ],
   }),
-
+  /** Convert a string column to lower case.
+   * @param cols - Columns to be processed.
+   * @param outputCols - Output columns.
+   * @returns Dataframe with new lower case columns.
+   */
   lower: StandardDataframeOperation('cols.lower'),
+  /**
+   * Convert a string column to upper case.
+   * @param cols - Columns to be processed.
+   * @param outputCols - Output columns.
+   * @returns Dataframe with new upper case columns.
+   */
   upper: StandardDataframeOperation('cols.upper'),
+  /**
+   * Convert a string column to snake case.
+   * @param cols - Columns to be processed.
+   * @param outputCols - Output columns.
+   * @returns Dataframe with new snake case columns.
+   */
   title: StandardDataframeOperation('cols.title'),
+  /**
+   * Convert a string column to snake case.
+   * @param cols - Columns to be processed.
+   * @param outputCols - Output columns.
+   * @returns Dataframe with new snake case columns.
+   */
   capitalize: StandardDataframeOperation('cols.capitalize'),
-  /* Pad a string column to a fixed width.
+  /** Pad a string column to a fixed width.
    * @param cols - Column to be padded.
    * @param width - Minimum width of the field.
    * @param fillChar - Character to use for padding.
@@ -1777,7 +1799,7 @@ export const operations = {
       },
     ],
   }),
-  /* Trim whitespace from both sides of each string in the specified column.
+  /** Trim whitespace from both sides of each string in the specified column.
    * @param cols - Column to be trimmed.
    * @param outputCols - Output column names.
    * @returns A new DataFrame with trimmed `cols`.
@@ -1826,12 +1848,12 @@ export const operations = {
       },
     ],
   }),
-  /* Strip html tags from a string.
+  /** Strip html tags from a string.
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the stripped string.
    */
-  strip_html: DataframeOperation<{ cols: Cols; outputCols: Cols }>({
+  stripHTML: DataframeOperation<{ cols: Cols; outputCols: Cols }>({
     targetType: 'dataframe',
     name: 'cols.strip_html',
     args: [
@@ -1845,7 +1867,7 @@ export const operations = {
       },
     ],
   }),
-  /* Format a date string.
+  /** Format a date string.
    * @param cols - Columns to be transformed.
    * @param currentFormat - Current date format.
    * @param outputFormat - Output date format.
@@ -1879,12 +1901,12 @@ export const operations = {
       },
     ],
   }),
-  /* Tokenize words in a string.
+  /** Tokenize words in a string.
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
    */
-  wordTokenize: DataframeOperation<{ cols: Cols; outputCols: Cols }>({
+  wordTokenizer: DataframeOperation<{ cols: Cols; outputCols: Cols }>({
     targetType: 'dataframe',
     name: 'cols.wordTokenize',
     args: [
@@ -1898,7 +1920,7 @@ export const operations = {
       },
     ],
   }),
-  /* Returns the number of words in a string.
+  /** Returns the number of words in a string.
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -1917,7 +1939,7 @@ export const operations = {
       },
     ],
   }),
-  /* Returns the length of a string.
+  /** Returns the length of a string.
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -1936,7 +1958,7 @@ export const operations = {
       },
     ],
   }),
-  /* Expand contracted words, e.g. "don't" to "do not"
+  /** Expand contracted words, e.g. "don't" to "do not"
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -1955,7 +1977,7 @@ export const operations = {
       },
     ],
   }),
-  /* Reverse the order of the characters in a column
+  /** Reverse the order of the characters in a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -1974,7 +1996,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove a specific character, string or regex from a column
+  /** Remove a specific character, string or regex from a column
    * @param cols - Columns to be transformed.
    * @param search - String to be searched.
    * @param searchBy - Search mode. Available options: 'full', 'word' or 'regex'.
@@ -2008,7 +2030,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove diacritics from a column
+  /** Remove diacritics from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2027,7 +2049,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove numbers from a column
+  /** Remove numbers from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2046,7 +2068,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove white spaces from a column
+  /** Remove white spaces from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2065,7 +2087,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove stop words from a column
+  /** Remove stop words from a column
    * @param cols - Columns to be transformed.
    * @param language - Language of the stop words.
    * @param outputCols - Output column names.
@@ -2093,7 +2115,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove URLs from a column
+  /** Remove URLs from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2112,7 +2134,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove extra spaces from a column
+  /** Remove extra spaces from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2131,7 +2153,7 @@ export const operations = {
       },
     ],
   }),
-  /* Remove special characters from a column
+  /** Remove special characters from a column
    * @param cols - Columns to be transformed.
    * @param outputCols - Output column names.
    * @returns A new dataframe with the new columns containing the date.
@@ -2150,7 +2172,7 @@ export const operations = {
       },
     ],
   }),
-  /* Convert a column to a datetime column
+  /** Convert a column to a datetime column
    * @param cols - Columns to be transformed.
    * @param currentFormat - Current date format.
    * @param outputCols - Output column names.
@@ -2184,7 +2206,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the year of a date
+  /** Get the year of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2208,7 +2230,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the month of a date
+  /** Get the month of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2232,7 +2254,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the day of a date
+  /** Get the day of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2256,7 +2278,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the hour of a date
+  /** Get the hour of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2280,7 +2302,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the minute of a date
+  /** Get the minute of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2304,7 +2326,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the second of a date
+  /** Get the second of a date
    * @param cols - Columns to be transformed.
    * @param format - Date format.
    * @param outputCols - Output column names.
@@ -2523,7 +2545,7 @@ export const operations = {
       },
     ],
   }),
-  /* Lemmatize verbs in the specified columns of a dataframe.
+  /** Lemmatize verbs in the specified columns of a dataframe.
    * @param cols - The columns to apply the lemmatization to.
    * @param language - The language to use for the lemmatization.
    * @param outputCols - The names of the output columns.
@@ -2551,7 +2573,7 @@ export const operations = {
       },
     ],
   }),
-  /* Stem verbs in the specified columns of a dataframe.
+  /** Stem verbs in the specified columns of a dataframe.
    * @param cols - The columns to apply the stemming to.
    * @param outputCols - The names of the output columns.
    * @returns A new dataframe with the specified stemming.
@@ -2570,7 +2592,7 @@ export const operations = {
       },
     ],
   }),
-  /* Impute missing values in the specified columns of a dataframe.
+  /** Impute missing values in the specified columns of a dataframe.
    * @param cols - The columns to apply the imputation to.
    * @param dataType - The data type to use for the imputation.
    * @param strategy - The strategy to use for the imputation.
@@ -2610,7 +2632,7 @@ export const operations = {
       },
     ],
   }),
-  /* Fill missing values in the specified columns of a dataframe.
+  /** Fill missing values in the specified columns of a dataframe.
    * @param cols - The columns to apply the imputation to.
    * @param value - The value to use for the imputation.
    * @param outputCols - The names of the output columns.
@@ -2660,7 +2682,7 @@ export const operations = {
       },
     ],
   }),
-  /* Count the number of unique values in the specified columns of a dataframe.
+  /** Count the number of unique values in the specified columns of a dataframe.
    * @param cols - The columns to count the unique values of.
    * @param estimate - Whether to estimate the number of unique values.
    * @returns A new dataframe with the specified unique value counts.
@@ -2676,32 +2698,32 @@ export const operations = {
       },
     ],
   }),
-  /* Sum the values in the specified columns of a dataframe.
+  /** Sum the values in the specified columns of a dataframe.
    * @param cols - The columns to sum.
    * @returns A new dataframe with the specified sums.
    */
   add: ColsMathOperation('cols.add'),
-  /* Subtract the values in the specified columns of a dataframe.
+  /** Subtract the values in the specified columns of a dataframe.
    * @param cols - The columns to subtract.
    * @returns A new dataframe with the specified differences.
    */
   sub: ColsMathOperation('cols.sub'),
-  /* Multiply the values in the specified columns of a dataframe.
+  /** Multiply the values in the specified columns of a dataframe.
    * @param cols - The columns to multiply.
    * @returns A new dataframe with the specified products.
    */
   mul: ColsMathOperation('cols.mul'),
-  /* Divide the values in the specified columns of a dataframe.
+  /** Divide the values in the specified columns of a dataframe.
    * @param cols - The columns to divide.
    * @returns A new dataframe with the specified quotients.
    */
   div: ColsMathOperation('cols.div'),
-  /* Modulo the values in the specified columns of a dataframe.
+  /** Modulo the values in the specified columns of a dataframe.
    * @param cols - The columns to modulo.
    * @returns A new dataframe with the specified remainders.
    */
   rdiv: ColsMathOperation('cols.rdiv'),
-  /* Calculate the z-score of the values in the specified columns of a dataframe.
+  /** Calculate the z-score of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the z-score of.
    * @param outputCols - The names of the output columns.
    * @returns A new dataframe with the specified z-scores.
@@ -2720,7 +2742,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the modified z-score of the values in the specified columns of a dataframe.
+  /** Calculate the modified z-score of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the modified z-score of.
    * @param estimate - Whether to estimate the median absolute deviation.
    * @param outputCols - The names of the output columns.
@@ -2747,7 +2769,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the standard score of the values in the specified columns of a dataframe.
+  /** Calculate the standard score of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the standard score of.
    * @param outputCols - The names of the output columns.
    * @returns A new dataframe with the specified standard scores.
@@ -2766,7 +2788,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the max-abs scaler of the values in the specified columns of a dataframe.
+  /** Calculate the max-abs scaler of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the max-abs scaler of.
    * @param outputCols - The names of the output columns.
    * @returns A new dataframe with the specified max-abs scalers.
@@ -2785,7 +2807,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the min-max scaler of the values in the specified columns of a dataframe.
+  /** Calculate the min-max scaler of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the min-max scaler of.
    * @param outputCols - The names of the output columns.
    * @returns A new dataframe with the specified min-max scalers.
@@ -2804,7 +2826,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the interquartile range of the values in the specified columns of a dataframe.
+  /** Calculate the interquartile range of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the interquartile range of.
    * @param more - Whether to calculate additional stats.
    * @param estimate - Whether to estimate the median absolute deviation.
@@ -2828,7 +2850,7 @@ export const operations = {
       },
     ],
   }),
-  /* Split the values from the specified column into a single array column.
+  /** Split the values from the specified column into a single array column.
    * @param cols - The columns to merge.
    * @param outputCol - The name of the output column.
    * @param drop - Whether to drop the source columns.
@@ -2862,7 +2884,7 @@ export const operations = {
       },
     ],
   }),
-  /* Merge the values from the specified columns into a single array column.
+  /** Merge the values from the specified columns into a single array column.
    * @param cols - The columns to merge.
    * @param separator - The separator to use between merged values.
    * @param splits - The number of splits to perform on each value.
@@ -2914,7 +2936,7 @@ export const operations = {
       },
     ],
   }),
-  /* Heatmap of the values in the specified columns of a dataframe.
+  /** Heatmap of the values in the specified columns of a dataframe.
    * @param colX - The column containing the X values.
    * @param colsY - The columns containing the Y values.
    * @param binX - The number of bins to use for the X axis.
@@ -2954,7 +2976,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the histogram of the values in the specified columns of a dataframe.
+  /** Calculate the histogram of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the histogram of.
    * @param buckets - The number of buckets to use.
    * @returns A dictionary of histograms, one key for each specified column.
@@ -2976,7 +2998,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the quality of the values in the specified columns of a dataframe.
+  /** Calculate the quality of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the quality of.
    * @param flush - Whether to flush the cache.
    * @param compute - Whether to compute the quality.
@@ -3002,7 +3024,7 @@ export const operations = {
       ],
     }
   ),
-  /* Infer the types of the values in the specified columns of a dataframe.
+  /** Infer the types of the values in the specified columns of a dataframe.
    * @param cols - The columns to infer the types of.
    * @param sampleCount - The number of samples to use.
    * @param tidy - Whether to return the result as a tidy dataframe.
@@ -3029,7 +3051,7 @@ export const operations = {
       },
     ],
   }),
-  /* Infer the date formats of the values in the specified columns of a dataframe.
+  /** Infer the date formats of the values in the specified columns of a dataframe.
    * @param cols - The columns to infer the date formats of.
    * @param sample - The number of samples to use.
    * @param tidy - Whether to return the result as a tidy dataframe.
@@ -3057,7 +3079,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the frequency of the values in the specified columns of a dataframe.
+  /** Calculate the frequency of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the frequency of.
    * @param top - The number of most frequent values to return.
    * @param percentage - Whether to return the frequency as a percentage.
@@ -3091,7 +3113,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the box plot of the values in the specified columns of a dataframe.
+  /** Calculate the box plot of the values in the specified columns of a dataframe.
    * @param cols - The columns to calculate the box plot of.
    * @returns A new dataframe with the specified box plot.
    */
@@ -3105,7 +3127,7 @@ export const operations = {
       },
     ],
   }),
-  /* Get the names of the columns that match the specified data types.
+  /** Get the names of the columns that match the specified data types.
    * @param cols - The columns to get the names of.
    * @param dataTypes - The data types to match.
    * @param invert - Whether to invert the match.
@@ -3142,7 +3164,7 @@ export const operations = {
       },
     ],
   }),
-  /* Count the number of zeros in the specified columns of a dataframe.
+  /** Count the number of zeros in the specified columns of a dataframe.
    * @param cols - The columns to count the zeros of.
    * @param tidy - Whether to return the result as a tidy dataframe.
    * @returns A new dataframe with the specified number of zeros.
@@ -3161,7 +3183,7 @@ export const operations = {
       },
     ],
   }),
-  /* Quantile-based discretization function.
+  /** Quantile-based discretization function.
    * Discretize variable into equal-sized buckets based on rank or based on sample quantiles.
    * @param cols - The columns to discretize.
    * @param quantiles - The number of quantiles.
@@ -3186,7 +3208,7 @@ export const operations = {
       },
     ],
   }),
-  /*  Use cut when you need to segment and sort data values into bins.
+  /**  Use cut when you need to segment and sort data values into bins.
    * This function is also useful for going from a continuous variable to a categorical variable.
    * @param cols - The columns to discretize.
    * @param bins - The number of bins.
@@ -3227,7 +3249,7 @@ export const operations = {
       },
     ],
   }),
-  /* Bin values into discrete intervals.
+  /** Bin values into discrete intervals.
    * @param cols - The columns to clip.
    * @param lower_bound - The lower bound.
    * @param upper_bound - The upper bound.
@@ -3261,7 +3283,7 @@ export const operations = {
       },
     ],
   }),
-  /* One-hot encoding maps a column of label indices to a column of binary vectors, with at most a single one-value.
+  /** One-hot encoding maps a column of label indices to a column of binary vectors, with at most a single one-value.
    * @param cols - The columns to one hot encode.
    * @param prefix - The prefix for the column names.
    * @param drop - Whether to drop the old columns.
@@ -3292,7 +3314,7 @@ export const operations = {
       },
     ],
   }),
-  /* Convert a string column to an index column by replacing the unique values with an index.
+  /** Convert a string column to an index column by replacing the unique values with an index.
    * @param cols - The columns to index.
    * @param outputCol - The output column.
    * @returns A new dataframe
@@ -3311,7 +3333,7 @@ export const operations = {
       },
     ],
   }),
-  /* Convert a index column to a string column by replacing the unique values with an index.
+  /** Convert a index column to a string column by replacing the unique values with an index.
    * @param cols - The columns to index.
    * @param outputCol - The output column.
    * @returns A new dataframe
@@ -3330,73 +3352,73 @@ export const operations = {
       },
     ],
   }),
-  /* Extract the domain of an url.
+  /** Extract the domain of an url.
   @param cols - The columns to extract the domain.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   domain: StandardDataframeOperation('cols.domain'),
-  /* Extract the top level domain of an url.
+  /** Extract the top level domain of an url.
   @param cols - The columns to extract the top level domain.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   topDomain: StandardDataframeOperation('cols.topDomain'),
-  /* Extract the subdomain of an url.
+  /** Extract the subdomain of an url.
   @param cols - The columns to extract the subdomain.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   subDomain: StandardDataframeOperation('cols.subDomain'),
-  /* Extract the protocol of an url.
+  /** Extract the protocol of an url.
   @param cols - The columns to extract the protocol.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   urlSchema: StandardDataframeOperation('cols.urlSchema'),
-  /* Extract the path of an url.
+  /** Extract the path of an url.
   @param cols - The columns to extract the path.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   urlPath: StandardDataframeOperation('cols.urlPath'),
-  /* Extract the file of an url.
+  /** Extract the file of an url.
   @param cols - The columns to extract the file.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   urlFile: StandardDataframeOperation('cols.urlFile'),
-  /* Extract the query of an url.
+  /** Extract the query of an url.
   @param cols - The columns to extract the query.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   urlQuery: StandardDataframeOperation('cols.urlQuery'),
-  /* Extract the fragment of an url.
+  /** Extract the fragment of an url.
   @param cols - The columns to extract the fragment.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   urlFragment: StandardDataframeOperation('cols.urlFragment'),
-  /* Extract the host of an url.
+  /** Extract the host of an url.
   @param cols - The columns to extract the host.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   host: StandardDataframeOperation('cols.host'),
-  /* Extract the port of an url.
+  /** Extract the port of an url.
   @param cols - The columns to extract the port.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   port: StandardDataframeOperation('cols.port'),
-  /* Extract the email username of an url.
+  /** Extract the email username of an url.
   @param cols - The columns to extract the email username.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   emailUsername: StandardDataframeOperation('cols.emailUsername'),
-  /* Extract the email domain of an url.
+  /** Extract the email domain of an url.
   @param cols - The columns to extract the email domain.
   @param outputCol - The output column.
   @returns A new dataframe
@@ -3404,19 +3426,19 @@ export const operations = {
   emailDomain: StandardDataframeOperation('cols.emailDomain'),
 
   // TODO: handle any and count functions, _values
-  /* Create the fingerprint for a column
+  /** Create the fingerprint for a column
   @param cols - The columns to extract the fingerprint.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   fingerprint: StandardDataframeOperation('cols.fingerprint'),
-  /*  A part-of-speech tagger, or POS-tagger, processes a sequence of words, and attaches a part of speech tag to each word.
+  /**  A part-of-speech tagger, or POS-tagger, processes a sequence of words, and attaches a part of speech tag to each word.
   @param cols - The columns to extract the part of speech.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   pos: StandardDataframeOperation('cols.pos'),
-  /* Calculate the ngram for string.
+  /** Calculate the ngram for string.
   @param cols - The columns to extract the ngram.
   @param outputCol - The output column.
   @returns A new dataframe
@@ -3439,7 +3461,7 @@ export const operations = {
       },
     ],
   }),
-  /* Calculate the ngram for a fingerprinted string.
+  /** Calculate the ngram for a fingerprinted string.
   @param cols - The columns to extract the ngram.
   @param outputCol - The output column.
   @returns A new dataframe
@@ -3466,13 +3488,13 @@ export const operations = {
       },
     ],
   }),
-  /* Apply the Metaphone algorithm to a specified column.
+  /** Apply the Metaphone algorithm to a specified column.
   @param cols - The columns to extract the metaphone.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   metaphone: StandardDataframeOperation('cols.metaphone'),
-  /* Calculate the levenshtein distance to a specified column.
+  /** Calculate the levenshtein distance to a specified column.
   @param cols - The columns to extract the levenshtein.
   @param otherCols - The other columns to extract the levenshtein.
   @param value - The value to extract the levenshtein.
@@ -3506,13 +3528,13 @@ export const operations = {
       },
     ],
   }),
-  /*Apply the NYSIIS algorithm to a specified column.
+  /** Apply the NYSIIS algorithm to a specified column.
   @param cols - The columns to extract the nysiis.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   nysiis: StandardDataframeOperation('cols.nysiis'),
-  /* The match rating approach (MRA) is a phonetic algorithm developed by Western Airlines in 1977
+  /** The match rating approach (MRA) is a phonetic algorithm developed by Western Airlines in 1977
 and published by the U.S. National Bureau of Standards in 1985. It is a refinement of the Soundex
 algorithm created by Margaret Odell and Robert Russell.
   @param cols - The columns to extract the match rating.
@@ -3520,19 +3542,19 @@ algorithm created by Margaret Odell and Robert Russell.
   @returns A new dataframe
  */
   matchRatingEncoder: StandardDataframeOperation('cols.matchRatingCodex'),
-  /* The Double Metaphone phonetic encoding algorithm is the second generation of this algorithm.
+  /** The Double Metaphone phonetic encoding algorithm is the second generation of this algorithm.
   @param cols - The columns to extract the double metaphone.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   doubleMetaphone: StandardDataframeOperation('cols.doubleMetaphone'),
-  /* Apply the Soundex algorithm to a specified column.
+  /** Apply the Soundex algorithm to a specified column.
   @param cols - The columns to extract the soundex.
   @param outputCol - The output column.
   @returns A new dataframe
    */
   soundex: StandardDataframeOperation('cols.soundex'),
-  /* TD-IDF (term frequency-inverse document frequency) is a statistical measure that evaluates how relevant a word.
+  /** TD-IDF (term frequency-inverse document frequency) is a statistical measure that evaluates how relevant a word.
   @param cols - The columns to extract the tfidf.
   @param outputCol - The output column.
   @returns A new dataframe
@@ -3547,7 +3569,7 @@ algorithm created by Margaret Odell and Robert Russell.
       },
     ],
   }),
-  /* Method of extracting features from text for use in modeling, such as with machine learning.
+  /** Method of extracting features from text for use in modeling, such as with machine learning.
   @param cols - The columns to extract the count vectorizer.
   @param outputCol - The output column.
   @returns A new dataframe
