@@ -1,6 +1,6 @@
 {
   "name": "@hi-primus/blurr",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Dataframe processing library",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
