@@ -51,6 +51,29 @@ export const operations = {
       return `save_csv(${kwargs.source})`;
     },
   }),
+  /** Get a random sample from a dataframe.
+   * @param n - Number of rows to be sampled.
+   * @param seed - Seed for sampling.
+   * @param outputCols - Output columns.
+   */
+  sample: DataframeOperation<{ n: number; seed: number }>({
+    targetType: 'dataframe',
+    name: 'sample',
+    args: [
+      {
+        name: 'n',
+        default: 10,
+      },
+      {
+        name: 'seed',
+        default: 0,
+      },
+    ],
+  }),
+  /** Get a slice of a dataframe.
+   * @param lower_bound - Lower bound of the slice.
+   * @param upper_bound - Upper bound of the slice.
+   */
   iloc: DataframeOperation<{ lower_bound: number; upper_bound: number }>({
     name: 'iloc',
     targetType: 'dataframe',

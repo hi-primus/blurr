@@ -1704,34 +1704,6 @@ export const operations = {
       },
     ],
   }),
-  /** Get a random sample from a dataframe.
-   * @param cols - Columns to be sampled.
-   * @param n - Number of rows to be sampled.
-   * @param seed - Seed for sampling.
-   * @param outputCols - Output columns.
-   */
-  sample: DataframeOperation<{ cols: Cols; outputCols: Cols }>({
-    targetType: 'dataframe',
-    name: 'cols.sample',
-    args: [
-      {
-        name: 'cols',
-        default: '*',
-      },
-      {
-        name: 'n',
-        default: 10,
-      },
-      {
-        name: 'seed',
-        default: 0,
-      },
-      {
-        name: 'outputCols',
-        default: null,
-      },
-    ],
-  }),
   /** Convert a string column to lower case.
    * @param cols - Columns to be processed.
    * @param outputCols - Output columns.
