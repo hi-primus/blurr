@@ -102,7 +102,7 @@ function StandardDataframeOperation(name: string) {
 }
 
 function ColsMathOperation(name: string) {
-  return DataframeOperation<{ cols: Cols; outputCols: Cols }>({
+  return DataframeOperation<{ cols: Cols; outputCol: string | number }>({
     targetType: 'dataframe',
     name,
     args: [
@@ -111,7 +111,7 @@ function ColsMathOperation(name: string) {
         default: '*',
       },
       {
-        name: 'outputCols',
+        name: 'outputCol',
         default: null,
       },
     ],
