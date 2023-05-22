@@ -1,0 +1,35 @@
+name: Update Optimus version
+on:
+  workflow_dispatch
+
+jobs:
+  extract-wheel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get latest version
+        id: get_latest_version
+        run: |
+          VERSION=$(curl -s https://test.pypi.org/pypi/pyoptimus/json | jq -r '.info.version')
+          WHEEL_URL=$(curl -s https://test.pypi.org/pypi/pyoptimus/${VERSION}/json | jq -r '.urls[] | select(.packagetype=="wheel").url')
+          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=wheel_url::$WHEEL_URL"
+          
+      - name: Update config.ts file
+        run: |
+          sed -i "s~export const OPTIMUS_WHEEL_URL = '[^']*'~export const OPTIMUS_WHEEL_URL = '${{ steps.get_latest_version.outputs.wheel_url }}'~" src/lib/config.ts
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --local user.name "${{ github.actor }}"
+          git commit -m "Update optimus version" src/lib/config.ts
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
