@@ -1,6 +1,5 @@
 name: Update Optimus version
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   extract-wheel:
@@ -17,11 +16,11 @@ jobs:
           WHEEL_URL=$(curl -s https://test.pypi.org/pypi/pyoptimus/${VERSION}/json | jq -r '.urls[] | select(.packagetype=="wheel").url')
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=wheel_url::$WHEEL_URL"
-          
+
       - name: Update config.ts file
         run: |
           sed -i "s~export const OPTIMUS_WHEEL_URL = '[^']*'~export const OPTIMUS_WHEEL_URL = '${{ steps.get_latest_version.outputs.wheel_url }}'~" src/lib/config.ts
-          
+
       - name: Commit changes
         run: |
           git config --local user.email "${{ github.actor }}@users.noreply.github.com"
