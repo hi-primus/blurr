@@ -13,7 +13,11 @@ jobs:
         id: get_latest_version
         run: |
           VERSION=$(curl -s https://test.pypi.org/pypi/pyoptimus/json | jq -r '.info.version')
-          WHEEL_URL=$(curl -s https://test.pypi.org/pypi/pyoptimus/${VERSION}/json | jq -r '.urls[] | select(.packagetype=="wheel").url')
+          WHEEL_URL=$(curl -s https://test.pypi.org/pypi/pyoptimus/${VERSION}/json | jq -r '.urls[] | select(.packagetype=="bdist_wheel").url')
+          if [ -z "$WHEEL_URL" ]; then
+            echo "Error: Failed to retrieve the wheel URL for version $VERSION"
+            exit 1
+          fi
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=wheel_url::$WHEEL_URL"
 
