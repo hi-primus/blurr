@@ -1,0 +1,44 @@
+name: Update Version and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version'
+        required: true
+
+jobs:
+  update-version-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update version
+        run: |
+          current_version=$(node -p "require('./package.json').version")
+          sed -i "s/\"version\": \"$current_version\"/\"version\": \"${{ github.event.inputs.version }}\"/" package.json
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --local user.name "${{ github.actor }}"
+          git commit -m "Bump version to ${{ github.event.inputs.version }}" package.json
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
