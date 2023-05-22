@@ -11,6 +11,7 @@ import { isSource } from '../client/data/source';
 import { getOperation } from '../operations';
 import { makePythonCompatible } from '../operations/factory';
 import { isPromiseLike, loadScript } from '../utils';
+import { OPTIMUS_WHEEL_URL } from '../config';
 
 const defaultPyodideOptions: PyodideBackendOptions = {
   scriptURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js',
@@ -76,10 +77,7 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
   ).then(async (pyodide) => {
     await pyodide.loadPackage('micropip');
     const micropip = pyodide.pyimport('micropip');
-
-    await micropip.install(
-      'https://test-files.pythonhosted.org/packages/74/41/ff48d76789aed550c785b833303e973ec1f5480aaf3d6b75743db56f7747/pyoptimus-0.1.4061-py3-none-any.whl'
-    );
+    await micropip.install(OPTIMUS_WHEEL_URL);
     pyodide.runPython(`
       from optimus import Optimus
       from io import BytesIO

@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare const self, importScripts, loadPyodide;
+declare const self, importScripts, loadPyodide, config;
 
 export const initializeWorker = () => {
   // TODO: import fetch, allow scriptURL?, handle Source objects
@@ -74,9 +74,7 @@ export const initializeWorker = () => {
       await self.pyodide.loadPackage('micropip');
       self.micropip = self.pyodide.pyimport('micropip');
 
-      await self.micropip.install(
-        'https://test-files.pythonhosted.org/packages/74/41/ff48d76789aed550c785b833303e973ec1f5480aaf3d6b75743db56f7747/pyoptimus-0.1.4061-py3-none-any.whl'
-      );
+      await self.micropip.install(config.OPTIMUS_WHEEL_URL); // to be replaced when getting content
       self.pyodide.runPython(`
         from optimus import Optimus
         from io import BytesIO

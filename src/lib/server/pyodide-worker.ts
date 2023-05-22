@@ -1,6 +1,7 @@
 import type { PyodideBackendOptions } from '../../types/pyodide';
 import type { Server as ServerInterface } from '../../types/server';
 import type { ServerOptions } from '../../types/server';
+import { OPTIMUS_WHEEL_URL } from '../config';
 import { getOperation } from '../operations';
 import { makePythonCompatible } from '../operations/factory';
 import { isPromiseLike, pythonString } from '../utils';
@@ -104,10 +105,9 @@ async function loadWorker(options: PyodideBackendOptions) {
 
   let content = initializeWorker.toString();
 
-  content = content.substring(
-    content.indexOf('{') + 1,
-    content.lastIndexOf('}')
-  );
+  content = content
+    .substring(content.indexOf('{') + 1, content.lastIndexOf('}'))
+    .replace('config.OPTIMUS_WHEEL_URL', `'${OPTIMUS_WHEEL_URL}'`);
 
   const worker = promiseWorker(window.URL.createObjectURL(new Blob([content])));
 
