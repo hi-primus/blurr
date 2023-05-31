@@ -1,4 +1,4 @@
-import { PyProxy } from 'pyodide';
+import { PyProxy } from 'pyodide/pyodide';
 
 import type { Client } from '../../../types/client';
 import type {
