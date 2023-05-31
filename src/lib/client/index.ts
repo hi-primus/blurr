@@ -31,7 +31,7 @@ const prepareResult = (client: Client, result: PythonCompatible) => {
   }
   if (
     client.options.serverOptions.local &&
-    client.backendServer.pyodide.isPyProxy(result)
+    result instanceof client.backendServer.pyodide.ffi.PyProxy
   ) {
     const newSource = Source(client, result);
     delete (newSource as Partial<FutureSource>).then;

@@ -202,7 +202,7 @@ export function ServerPyodide(options: ServerOptions): ServerInterface {
       } else if (isSource(source)) {
         sourceProxy =
           source.data || server.pyodide.globals.get(source.toString());
-      } else if (server.pyodide.isPyProxy(source)) {
+      } else if (source instanceof server.pyodide.ffi.PyProxy) {
         sourceProxy = source;
       } else {
         throw new Error(

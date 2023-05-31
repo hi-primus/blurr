@@ -33,7 +33,7 @@ export const initializeWorker = () => {
   const adaptResult = (result) => {
     if (result instanceof ArrayBuffer) {
       return result;
-    } else if (self.pyodide.isPyProxy(result)) {
+    } else if (result instanceof self.pyodide.ffi.PyProxy) {
       try {
         if (typeof result?.toJs === 'function') {
           result = result.toJs({ dict_converter: _mapToObject });

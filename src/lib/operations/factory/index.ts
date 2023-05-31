@@ -25,7 +25,8 @@ export function makePythonCompatible(
   value: OperationCompatible,
   useProxies = false
 ) {
-  if (useProxies && (server as Server)?.pyodide?.isPyProxy(value)) {
+  const pyodide = (server as Server)?.pyodide;
+  if (useProxies && pyodide && value instanceof pyodide.ffi.PyProxy) {
     return value;
   } else if (useProxies && isSource(value)) {
     return value.data || server.getGlobal(value.toString());
@@ -203,7 +204,11 @@ export function BlurrOperation<
     });
 
     return optionalPromise(operationResult, (operationResult) => {
-      if (server.options.local && server.pyodide?.isPyProxy(operationResult)) {
+      if (
+        server.options.local &&
+        server.pyodide &&
+        operationResult instanceof server.pyodide.ffi.PyProxy
+      ) {
         return operationResult as unknown as TR; // TODO: Check support for proxies in types
       }
 
