@@ -216,7 +216,12 @@ export function Blurr(options: ClientOptions = {}): Client {
     }
     return prepareResult(blurr, result);
   };
-  blurr.sources = {};
+
+  blurr.createSource = (name: string) => {
+    const source = Source(blurr, name);
+    return source;
+  };
+
   blurr.supports = blurr.backendServer.supports;
   // TODO: improve security in setGlobal and getGlobal
   blurr.setGlobal = blurr.backendServer.setGlobal;
