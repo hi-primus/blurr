@@ -138,7 +138,7 @@ onMounted(() => {
 
   const blurr = Blurr({
     serverOptions: {
-      scriptURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js',
+      scriptURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js',
       useWorker: true
     }
   });

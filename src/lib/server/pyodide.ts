@@ -14,7 +14,7 @@ import { isPromiseLike, loadScript } from '../utils';
 import { OPTIMUS_WHEEL_URL } from '../config';
 
 const defaultPyodideOptions: PyodideBackendOptions = {
-  scriptURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js',
+  scriptURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/pyodide.js',
   local: true,
 };
 
