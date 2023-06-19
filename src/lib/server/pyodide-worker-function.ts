@@ -65,7 +65,7 @@ export const initializeWorker = () => {
   async function initialize(options = {}) {
     if (!backendLoaded) {
       options = Object.assign(
-        { indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.0/full/' },
+        { indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.23.3/full/' },
         options
       );
 
