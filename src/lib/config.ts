@@ -1,1 +1,1 @@
-export const OPTIMUS_WHEEL_URL = 'https://test-files.pythonhosted.org/packages/66/67/f017583eeca47610c802814c4511d874a08c0588c8a2f9ecf812499048ce/pyoptimus-0.1.4067-py3-none-any.whl';
+export const OPTIMUS_WHEEL_URL = 'https://test-files.pythonhosted.org/packages/85/ce/57f6733e1010fdb0ef9d65fbc30e542b6199d8dc13da656642a6365b2a54/pyoptimus-0.1.4068-py3-none-any.whl';
